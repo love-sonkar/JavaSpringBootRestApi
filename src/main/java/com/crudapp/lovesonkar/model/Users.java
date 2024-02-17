@@ -1,9 +1,10 @@
 package com.crudapp.lovesonkar.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Users {
@@ -14,19 +15,32 @@ public class Users {
     private String username;
     private String password;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Notes> notes = new ArrayList<>();
 
     public int getId() {
         return id;
+    }
+
+    public List<Notes> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Notes notes) {
+        this.notes.add(notes);
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public Users(int id, String username, String password) {
+
+    public Users(int id, String username, String password, List<Notes> notes) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.notes = notes;
     }
 
     public Users() {
@@ -46,6 +60,16 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", notes=" + notes +
+                '}';
     }
 }
 

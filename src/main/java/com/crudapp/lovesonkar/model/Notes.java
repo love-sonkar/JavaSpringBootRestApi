@@ -1,8 +1,7 @@
 package com.crudapp.lovesonkar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 
 @Entity
 public class Notes {
@@ -11,21 +10,26 @@ public class Notes {
     private long id;
     private String notesitem;
 
+    @ManyToOne
+    private Users user;
+
+    public Notes(long id, String notesitem) {
+        this.id = id;
+        this.notesitem = notesitem;
+    }
+
+    public Notes() {
+    }
+
     @Override
     public String toString() {
         return "Notes{" +
                 "id=" + id +
                 ", notesitem='" + notesitem + '\'' +
+
                 '}';
     }
 
-    public Notes(long id, String notesItem) {
-        this.id = id;
-        this.notesitem = notesItem;
-    }
-
-    public Notes() {
-    }
 
     public long getId() {
         return id;
@@ -42,6 +46,4 @@ public class Notes {
     public void setNotesItem(String notesItem) {
         this.notesitem = notesItem;
     }
-
-
 }

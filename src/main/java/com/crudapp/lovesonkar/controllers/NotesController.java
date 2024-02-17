@@ -1,13 +1,14 @@
 package com.crudapp.lovesonkar.controllers;
 
 import com.crudapp.lovesonkar.model.Notes;
+import com.crudapp.lovesonkar.model.Users;
 import com.crudapp.lovesonkar.repository.NotesRepo;
+import com.crudapp.lovesonkar.repository.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:5173/"})
@@ -16,9 +17,16 @@ public class NotesController {
     @Autowired
     private NotesRepo notesRepo;
 
-    @PostMapping("/addnotes")
-    Notes newNotes(@RequestBody Notes newNotes) {
-        return notesRepo.save(newNotes);
+    @Autowired
+    private UsersRepo user;
+
+    @PostMapping("/addnotes/{username}")
+    String newNotes(@RequestBody Notes note, @PathVariable String username) {
+        Notes resNote = notesRepo.save(note);
+        Users userRes = user.findByUsername(username);
+        userRes.setNotes(resNote);
+        user.save(userRes);
+        return "Notes Added";
     }
 
     @GetMapping("/allnotes")
@@ -44,8 +52,8 @@ public class NotesController {
     }
 
     @PutMapping("/notes/{id}")
-    public void updateNotes(@RequestBody Notes note,@PathVariable Long id){
-        Notes nn =  notesRepo.findById(id).get();
+    public void updateNotes(@RequestBody Notes note, @PathVariable Long id) {
+        Notes nn = notesRepo.findById(id).get();
         nn.setNotesItem(note.getNotesItem());
         notesRepo.save(nn);
     }
