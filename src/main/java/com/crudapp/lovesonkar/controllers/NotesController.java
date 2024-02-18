@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -27,6 +28,14 @@ public class NotesController {
         userRes.setNotes(resNote);
         user.save(userRes);
         return "Notes Added";
+    }
+
+    @GetMapping("/allnotes/{username}")
+    List<Notes> userNotes(@PathVariable String username) {
+        Users userObj = user.findByUsername(username);
+        System.out.println(userObj);
+        List<Notes> nnotes = userObj.getNotes();
+        return nnotes;
     }
 
     @GetMapping("/allnotes")

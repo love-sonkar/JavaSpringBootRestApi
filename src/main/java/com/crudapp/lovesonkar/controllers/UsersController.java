@@ -17,7 +17,7 @@ public class UsersController {
     private UsersRepo users;
 
     @PostMapping("/signup")
-    private ResponseEntity<Users> signUpUser(@RequestBody Users data) {
+    private ResponseEntity<String> signUpUser(@RequestBody Users data) {
         String username = data.getUsername();
         Users userObj = users.findByUsername(username);
         if (userObj != null) {
@@ -26,14 +26,11 @@ public class UsersController {
             }
         }
         Users userdata = users.save(data);
-        Users sendObj = new Users();
-        sendObj.setId(userdata.getId());
-        sendObj.setUsername(userdata.getUsername());
-        return ResponseEntity.ok(sendObj);
+        return ResponseEntity.ok(userdata.getUsername());
     }
 
     @PostMapping("/login")
-    private ResponseEntity<Users> loginUser(@RequestBody Users data) {
+    private ResponseEntity<String> loginUser(@RequestBody Users data) {
         String username = data.getUsername();
         Users userObj = users.findByUsername(username);
         if (userObj != null) {
@@ -44,10 +41,7 @@ public class UsersController {
                 return new ResponseEntity("password not match", HttpStatus.NOT_FOUND);
 
             }
-            Users sendObj = new Users();
-            sendObj.setId(userObj.getId());
-            sendObj.setUsername(userObj.getUsername());
-            return ResponseEntity.ok(sendObj);
+            return ResponseEntity.ok(userObj.getUsername());
         } else {
             return new ResponseEntity("Not found", HttpStatus.NOT_FOUND);
         }
