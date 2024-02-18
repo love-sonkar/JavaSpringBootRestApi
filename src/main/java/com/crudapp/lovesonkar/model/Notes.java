@@ -2,6 +2,8 @@ package com.crudapp.lovesonkar.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 public class Notes {
@@ -12,6 +14,10 @@ public class Notes {
 
     @ManyToOne
     private Users user;
+
+
+    @ManyToOne
+    private AdminUser admin;
 
     public Notes(long id, String notesitem) {
         this.id = id;

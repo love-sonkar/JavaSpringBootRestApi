@@ -15,9 +15,12 @@ public class Users {
     private String username;
     private String password;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<Notes> notes = new ArrayList<>();
+
+    @ManyToOne
+    private AdminUser admin;
 
     public int getId() {
         return id;
