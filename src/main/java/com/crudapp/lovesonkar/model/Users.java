@@ -19,27 +19,8 @@ public class Users {
     @JoinColumn(name = "user_id")
     private List<Notes> notes = new ArrayList<>();
 
-    public Users(int id, String username, String password, List<Notes> notes) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.notes = notes;
-    }
-
-    public Users(int id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    public Users() {
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public List<Notes> getNotes() {
@@ -48,6 +29,21 @@ public class Users {
 
     public void setNotes(Notes notes) {
         this.notes.add(notes);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public Users(int id, String username, String password, List<Notes> notes) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.notes = notes;
+    }
+
+    public Users() {
     }
 
     public String getUsername() {
