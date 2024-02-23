@@ -1,13 +1,16 @@
 package com.crudapp.lovesonkar.controllers;
 
 import com.crudapp.lovesonkar.model.AdminUser;
+import com.crudapp.lovesonkar.model.Notes;
+import com.crudapp.lovesonkar.model.Testadmin;
+import com.crudapp.lovesonkar.model.Users;
 import com.crudapp.lovesonkar.repository.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:5173/"})
@@ -46,5 +49,17 @@ public class AdminController {
     private List<AdminUser> allAdmmin() {
         return adminRepo.findAll();
     }
+
+    @GetMapping("/getadmin")
+    private List<Testadmin>  getAdmin() {
+        List<List<?>> adminList = adminRepo.findAllUser();
+        List<Testadmin> adminObject = new ArrayList<>();
+        for (int i = 0; i < adminList.size(); i++) {
+            Testadmin createObject = new Testadmin((Integer) adminList.get(i).get(0),(String)adminList.get(i).get(1));
+            adminObject.add(createObject);
+        }
+        return adminObject;
+    }
+
 
 }
